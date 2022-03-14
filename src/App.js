@@ -2,40 +2,34 @@ import React from 'react';
 import {
   ChakraProvider,
   Box,
-  Text,
-  Link,
   VStack,
-  Code,
   Grid,
   theme,
 } from '@chakra-ui/react';
-import { ColorModeSwitcher } from './ColorModeSwitcher';
-import { Logo } from './Logo';
+import NavBar from './components/navbar';
+import BlogPostWithImage from './components/posts';
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+const queryClient = new QueryClient();
+
 
 function App() {
   return (
+    <QueryClientProvider client={queryClient}>
     <ChakraProvider theme={theme}>
-      <Box textAlign="center" fontSize="xl">
-        <Grid minH="100vh" p={3}>
-          <ColorModeSwitcher justifySelf="flex-end" />
-          <VStack spacing={8}>
-            <Logo h="40vmin" pointerEvents="none" />
-            <Text>
-              Edit <Code fontSize="xl">src/App.js</Code> and save to reload.
-            </Text>
-            <Link
-              color="teal.500"
-              href="https://chakra-ui.com"
-              fontSize="2xl"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn Chakra
-            </Link>
-          </VStack>
-        </Grid>
+    <Box zIndex={1000} position={'fixed'} w={'100%'} h={'auto'}>
+      <NavBar/>
       </Box>
+      <Box textAlign="center" fontSize="xl" z-index='-1'>
+        <Grid minH="100vh" p={3}>
+          <VStack spacing={8}>   
+            <BlogPostWithImage />
+            </VStack>
+        </Grid>
+  
+   </Box>
     </ChakraProvider>
+    </QueryClientProvider>
   );
 }
 
