@@ -11,8 +11,11 @@ export const fetchCategories = () => {
   return res;
 }
 
-export const fetchPosts = () => {
-  const res = axios.get(POSTS);
+export const fetchPosts = (context) => {
+  const { queryKey } = context;
+  const [, params] = queryKey;
+  const res = axios.get(POSTS, {params,});
+  
   return res;
 }
 
@@ -20,3 +23,4 @@ export const fetchMessages = () => {
   const res = axios.get(MESSAGES);
   return res;
 }
+

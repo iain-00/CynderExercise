@@ -1,6 +1,8 @@
 import React from 'react';
 import { useQuery } from 'react-query';
 import { fetchPosts } from '../axios/axiosFunctions'; // axios
+import { get } from 'lodash';
+import { Link } from 'react-router-dom';
 import {
   Box,
   Center,
@@ -10,48 +12,55 @@ import {
   Avatar,
   VStack,
   Image,
+  SimpleGrid,
 } from '@chakra-ui/react';
 
 export default function BlogPostWithImage() {
   const { data: postsData } = useQuery([
     'posts',
     {
-        _limit: 5,
+      populate: '*',
     },
 ], fetchPosts); // react-query
-
-  // const newList = postsData?.data.data.slice(4);
-  // console.log(postsData?.data.data)
-
+console.log(postsData)
   return (
     <Center py={6}>
-    <VStack>
+    <VStack pt={50}>
+    <Text
+            color={'black.500'}
+            textTransform={'uppercase'}
+            fontWeight={800}
+            fontSize={'xl'}
+            letterSpacing={1.1}>
+            Featured Posts
+          </Text>
+    <SimpleGrid columns={2} spacing={10}>
     {postsData?.data.data.slice(0,4).map((item) => (
+   
       <Box key={item.id}
-        maxW={'445px'}
+        maxW={'500px'}
         w={'full'}
         // bg={useColorModeValue('white', 'gray.900')}
         boxShadow={'2xl'}
         rounded={'md'}
         p={6}
         overflow={'hidden'}>
+           {/* {console.log(get(item, 'attributes.cover.data.attributes.url'))} */}
         <Box
           h={'auto'}
           bg={'gray.100'}
-          mt={-6}
-          mx={-6}
-          mb={6}
+          mt={1}
+          mx={-1}
+          mb={1}
           pos={'relative'}>
            <Image
-            src={
-              'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
-            }
+            src={`https://training-api-dev.cynder.io/${get(item, 'attributes.cover.data.attributes.url')}`}
             layout={'fill'}
           />
         </Box>
         <Stack>
           <Text
-            color={'green.500'}
+            color={'blue.500'}
             textTransform={'uppercase'}
             fontWeight={800}
             fontSize={'sm'}
@@ -64,10 +73,19 @@ export default function BlogPostWithImage() {
             fontFamily={'body'}>
             {item.attributes.title}
           </Heading>
-          <Text color={'gray.500'}>
-          {item.attributes.content}
-          </Text>
+          <Text color={'gray.500'} dangerouslySetInnerHTML={{
+             __html: get(item, 'attributes.content')}} noOfLines={5}/>
+         
         </Stack>
+        <Link to={`/postDetails/${item.id}`}>
+            <Text
+              textTransform={'uppercase'}
+              fontWeight={800}
+              fontSize={'small'}
+              letterSpacing={1.1}>
+              Read More
+            </Text>
+        </Link>
         <Stack mt={6} direction={'row'} spacing={4} align={'center'}>
           <Avatar
             src={'https://avatars0.githubusercontent.com/u/1164541?v=4'}
@@ -77,11 +95,13 @@ export default function BlogPostWithImage() {
             <Text color={'gray.500'}>Published on: {item.attributes.publishedAt}</Text>
           </Stack>
         </Stack>
+       
       </Box>
 
     ))}
-    </VStack>
 
+    </SimpleGrid>
+    </VStack>
     </Center>
   );
 }

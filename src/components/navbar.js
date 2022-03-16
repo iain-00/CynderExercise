@@ -4,7 +4,6 @@ import {
   Text,
   IconButton,
   Stack,
-  Collapse,
   Icon,
   Link,
   Popover,
@@ -12,13 +11,11 @@ import {
   PopoverContent,
   useColorModeValue,
   useDisclosure,
-  Image,
   Center,
 } from '@chakra-ui/react';
 import {
   HamburgerIcon,
   CloseIcon,
-  ChevronDownIcon,
   ChevronRightIcon,
 } from '@chakra-ui/icons';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
@@ -56,52 +53,16 @@ export default function NavBar() {
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
         <Center>
-        <Image  
-                href={'../App.js'}
-                borderRadius='5px'
-                boxSize='27px'
-                objectFit='cover'
-                src='./hlogo.png'
-              />
+        <Text>Cynder Exercise</Text>
         </Center>
-           
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             <DesktopNav />
           </Flex>
         </Flex>
-
-        {/* <Stack
-          flex={{ base: 1, md: 0 }}
-          justify={'flex-end'}
-          direction={'row'}
-          spacing={6}>
-          <Button
-            as={'a'}
-            fontSize={'sm'}
-            fontWeight={400}
-            variant={'link'}
-            href={'#'}>
-            Sign In
-          </Button>
-          <Button
-            display={{ base: 'none', md: 'inline-flex' }}
-            fontSize={'sm'}
-            fontWeight={600}
-            color={'white'}
-            bg={'pink.400'}
-            href={'#'}
-            _hover={{
-              bg: 'pink.300',
-            }}>
-            Sign Up
-          </Button>
-        </Stack> */}
         <ColorModeSwitcher justifySelf="flex-end" />
       </Flex>
 
-      <Collapse in={isOpen} animateOpacity>
-        <MobileNav />
-      </Collapse>
+     
     </Box>
   );
 }
@@ -187,91 +148,28 @@ const DesktopSubNav = ({ label, href, subLabel }) => {
   );
 };
 
-const MobileNav = () => {
-  return (
-    <Stack
-      bg={useColorModeValue('white', 'gray.800')}
-      p={4}
-      display={{ md: 'none' }}>
-      {NAV_ITEMS.map((navItem) => (
-        <MobileNavItem key={navItem.label} {...navItem} />
-      ))}
-    </Stack>
-  );
-};
-
-const MobileNavItem = ({ label, children, href }) => {
-  const { isOpen, onToggle } = useDisclosure();
-
-  return (
-    <Stack spacing={4} onClick={children && onToggle}>
-      <Flex
-        py={2}
-        as={Link}
-        href={href ?? '#'}
-        justify={'space-between'}
-        align={'center'}
-        _hover={{
-          textDecoration: 'none',
-        }}>
-        <Text
-          fontWeight={600}
-          color={useColorModeValue('gray.600', 'gray.200')}>
-          {label}
-        </Text>
-        {children && (
-          <Icon
-            as={ChevronDownIcon}
-            transition={'all .25s ease-in-out'}
-            transform={isOpen ? 'rotate(180deg)' : ''}
-            w={6}
-            h={6}
-          />
-        )}
-      </Flex>
-
-      <Collapse in={isOpen} animateOpacity style={{ marginTop: '0!important' }}>
-        <Stack
-          mt={2}
-          pl={4}
-          borderLeft={1}
-          borderStyle={'solid'}
-          borderColor={useColorModeValue('gray.200', 'gray.700')}
-          align={'start'}>
-          {children &&
-            children.map((child) => (
-              <Link key={child.label} py={2} href={child.href}>
-                {child.label}
-              </Link>
-            ))}
-        </Stack>
-      </Collapse>
-    </Stack>
-  );
-};
-
 const NAV_ITEMS = [
   {
     label: 'Home',
-    href: '../App',
+    href: '/',
   },
 
   {
     label: 'About',
-    href: '../pages/about',
+    href: '/about',
   },
 
   {
     label: 'Services',
     children: [
       {
-        label: 'Job Board',
-        subLabel: 'Find your dream design job',
-        href: '#',
+        label: 'Web App Dev',
+        subLabel: 'Web App by you',
+        href: '/services',
       },
       {
-        label: 'Freelance Projects',
-        subLabel: 'An exclusive list for contract work',
+        label: 'Mobile App Dev',
+        subLabel: 'Mobile App by you',
         href: '#',
       },
     ],
@@ -279,10 +177,10 @@ const NAV_ITEMS = [
   
   {
     label: 'Process',
-    href: '#',
+    href: '/process',
   },
   {
     label: 'Contact Us',
-    href: '#',
+    href: '/contactUs',
   },
 ];
