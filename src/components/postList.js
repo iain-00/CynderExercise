@@ -11,18 +11,17 @@ import {
   Stack,
   Avatar,
   VStack,
-  Image,
   SimpleGrid,
 } from '@chakra-ui/react';
 
-export default function BlogPostWithImage() {
+export default function PostsList() {
   const { data: postsData } = useQuery([
     'posts',
     {
       populate: '*',
     },
 ], fetchPosts); // react-query
-
+console.log(postsData)
   return (
     <Center py={6}>
     <VStack pt={50}>
@@ -32,10 +31,10 @@ export default function BlogPostWithImage() {
             fontWeight={800}
             fontSize={'xl'}
             letterSpacing={1.1}>
-            Featured Posts
+            All Posts
           </Text>
     <SimpleGrid columns={2} spacing={10}>
-    {postsData?.data.data.slice(0,4).map((item) => (
+    {postsData?.data.data.map((item) => (
    
       <Box key={item.id}
         maxW={'500px'}
@@ -53,10 +52,6 @@ export default function BlogPostWithImage() {
           mx={-1}
           mb={1}
           pos={'relative'}>
-           <Image
-            src={`https://training-api-dev.cynder.io/${get(item, 'attributes.cover.data.attributes.url')}`}
-            layout={'fill'}
-          />
         </Box>
         <Stack>
           <Text
@@ -100,7 +95,7 @@ export default function BlogPostWithImage() {
 
     ))}
     </SimpleGrid>
-        <Link to={`/postList/`}>
+    <Link to={`/`}>
           <Text
                 align={'right'}
                 color={'black.500'}
@@ -108,7 +103,7 @@ export default function BlogPostWithImage() {
                 fontWeight={800}
                 fontSize={'xl'}
                 letterSpacing={1.1}>
-                View all Posts
+                Featured Posts
           </Text>
         </Link>
     </VStack>

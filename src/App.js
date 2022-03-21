@@ -13,8 +13,9 @@ import BlogPostWithImage from './components/posts';
 import About from './components/about';
 import Services from './components/services';
 import ProcessPage from './components/process';
-import ContactUsPage from './components/contactUs';
+import ContactUs from './components/contactUs';
 import PostDetails from './components/postDetails';
+import PostList from './components/postList';
 
 
 const queryClient = new QueryClient();
@@ -36,8 +37,9 @@ function App() {
               <Route path='/about' element={<About/>}/>
               <Route path='/services' element={<Services/>}/>
               <Route path='/process' element={<ProcessPage/>}/>
-              <Route path='/contactUs' element={<ContactUsPage/>}/>
+              <Route path='/contactUs' element={<ContactUs/>}/>
               <Route path='/postDetails/:id' element={<PostDetails/>}/>
+              <Route path='/postList' element={<PostList/>}/>
             </Routes>
           </BrowserRouter>  
             </VStack>

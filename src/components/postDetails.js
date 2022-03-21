@@ -49,15 +49,14 @@ console.log(data)
         /> 
         
       <Text
-        align={'right'}
+        align={'left'}
         fontSize={{ base: 'xl', md: '2xl' }}
-        textAlign={'center'}
         maxW={'3xl'}
         dangerouslySetInnerHTML={{
           __html: get(data, 'data.data.attributes.content')}}
       
        />
-     <Stack mt={6} direction={'row'} spacing={4} align={'center'}>
+     <Stack mt={6} direction={'row'} spacing={4} align={'left'}>
           <Avatar
             src={'https://avatars0.githubusercontent.com/u/1164541?v=4'}
             alt={'Author'}

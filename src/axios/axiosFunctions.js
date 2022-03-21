@@ -24,3 +24,10 @@ export const fetchMessages = () => {
   return res;
 }
 
+export const createMessage = (params) => {
+  const res = axios.post(MESSAGES, params);
+  return res;
+}
+
+
+

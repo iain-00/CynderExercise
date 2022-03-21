@@ -1,4 +1,7 @@
 import React from 'react';
+import { useMutation } from 'react-query';
+import { useState } from 'react';
+import { createMessage } from '../axios/axiosFunctions';
 import {
     Container,
     Flex,
@@ -26,9 +29,36 @@ import {
     MdOutlineEmail,
   } from 'react-icons/md';
   import { BsGithub, BsDiscord, BsPerson } from 'react-icons/bs';
-  
-  export default function contact() {
+
+  export default function ContactUs() {
+
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [organization, setOrganization] = useState('')
+    const [contactNumber, setContactNumber] = useState('')
+    const [message, setMessage] = useState('')
+
+    const createMessageMutation = useMutation(createMessage);
+
+    const handleSubmit = () => {
+
+      createMessageMutation.mutateAsync({
+        data: {
+          name: name,
+          email: email,
+          organization: organization,
+          contactNumber: contactNumber,
+          message: message,
+        },
+      });
+      
+
+
+    }
+
+
     return (
+      <>
       <Container mt={10} maxW="full"  centerContent overflow="hidden">
         <Flex>
           <Box
@@ -75,7 +105,7 @@ import {
                           color="black"
                           _hover={{ border: '2px solid #1C6FEB' }}
                           leftIcon={<MdLocationOn color="#1970F1" size="20px" />}>
-                          Karnavati, India
+                          Baguio City, Philippines
                         </Button>
                       </VStack>
                     </Box>
@@ -111,6 +141,7 @@ import {
                     </HStack>
                   </Box>
                 </WrapItem>
+
                 <WrapItem>
                   <Box bg="white" borderRadius="lg">
                     <Box m={8} color="#0B0E3F">
@@ -122,43 +153,43 @@ import {
                               pointerEvents="none"
                               children={<BsPerson color="gray.800" />}
                             />
-                            <Input type="text" size="md" />
+                            <Input type="text" onChange={e => setName(e.target.value) } value={name} size="md" />
                           </InputGroup>
                         </FormControl>
 
-                        <FormControl id="name">
+                        <FormControl id="email">
                           <FormLabel>Mail</FormLabel>
                           <InputGroup borderColor="#E0E1E7">
                             <InputLeftElement
                               pointerEvents="none"
                               children={<MdOutlineEmail color="gray.800" />}
                             />
-                            <Input type="text" size="md" />
+                            <Input type="text" onChange={e => setEmail(e.target.value) } value={email} size="md" />
                           </InputGroup>
                         </FormControl>
 
-                        <FormControl id="name">
+                        <FormControl id="organization">
                           <FormLabel>Organization</FormLabel>
                           <InputGroup borderColor="#E0E1E7">
                             
-                            <Input type="text" size="md" />
+                            <Input type="text" onChange={e => setOrganization(e.target.value) } value={organization} size="md" />
                           </InputGroup>
                         </FormControl>
 
-                        <FormControl id="name">
+                        <FormControl id="contactNumber">
                           <FormLabel>Contact No</FormLabel>
                           <InputGroup borderColor="#E0E1E7">
                             <InputLeftElement
                               pointerEvents="none"
                               children={<MdPhone color="gray.800" />}
                             />
-                            <Input type="text" size="md" />
+                            <Input type="text" onChange={e => setContactNumber(e.target.value) } value={contactNumber} size="md" />
                           </InputGroup>
                         </FormControl>
 
-                        <FormControl id="name">
+                        <FormControl id="message">
                           <FormLabel>Message</FormLabel>
-                          <Textarea
+                          <Textarea onChange={e => setMessage(e.target.value) } value={message}
                             borderColor="gray.300"
                             _hover={{
                               borderRadius: 'gray.300',
@@ -166,8 +197,9 @@ import {
                             placeholder="message"
                           />
                         </FormControl>
-                        <FormControl id="name" float="right">
-                          <Button
+
+                        <FormControl id="submit" float="right">
+                          <Button type="button" onClick={ () => handleSubmit() }
                             variant="solid"
                             bg="#0D74FF"
                             color="white"
@@ -184,5 +216,7 @@ import {
           </Box>
         </Flex>
       </Container>
+      </>
     );
   }
+
