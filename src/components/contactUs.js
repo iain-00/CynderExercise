@@ -52,7 +52,7 @@ import {
         },
       });
       
-
+      window.location.reload(true);
 
     }
 
